@@ -1,0 +1,60 @@
+tests:       True
+flags:       +enable-cluster-counting
+
+-- Crude adjustment for GHC 9.6
+allow-newer: *:base
+allow-newer: *:ghc-prim
+allow-newer: *:template-haskell
+allow-newer: *:unix
+
+-- Fix installed versions to avoid picking up wrong versions
+-- due to allow-newer.
+-- Not all of these fixtures are necessary, I suppose.
+constraints:  Cabal              == 3.9.0.0
+constraints:  Cabal-syntax       == 3.9.0.0
+constraints:  array              == 0.5.4.0
+constraints:  base               == 4.18.0.0
+constraints:  binary             == 0.8.9.1
+constraints:  bytestring         == 0.11.3.1
+constraints:  containers         == 0.6.6
+constraints:  deepseq            == 1.4.8.0
+constraints:  directory          == 1.3.8.0
+constraints:  exceptions         == 0.10.5
+constraints:  filepath           == 1.4.100.0
+constraints:  ghc                == 9.6.0.20230111
+constraints:  ghc-bignum         == 1.3
+constraints:  ghc-boot           == 9.6.0.20230111
+constraints:  ghc-boot-th        == 9.6.0.20230111
+constraints:  ghc-compact        == 0.1.0.0
+constraints:  ghc-heap           == 9.6.0.20230111
+constraints:  ghc-prim           == 0.10.0
+constraints:  ghci               == 9.6.0.20230111
+constraints:  haskeline          == 0.8.2
+constraints:  hpc                == 0.6.2.0
+constraints:  integer-gmp        == 1.1
+constraints:  libiserv           == 9.6.0.20230111
+constraints:  mtl                == 2.3.1
+constraints:  parsec             == 3.1.15.1
+constraints:  pretty             == 1.1.3.6
+constraints:  process            == 1.6.16.0
+constraints:  rts                == 1.0.2
+constraints:  stm                == 2.5.1.0
+constraints:  system-cxx-std-lib == 1.0
+constraints:  template-haskell   == 2.19.0.0
+constraints:  terminfo           == 0.4.1.5
+constraints:  text               == 2.0.1
+constraints:  text-icu           == 0.8.0.2
+constraints:  time               == 1.12.2
+constraints:  transformers       == 0.6.0.4
+constraints:  unix               == 2.8.0.0
+constraints:  xhtml              == 3000.2.2.1
+
+-- unix-compat-0.7 from fork that works with unix-2.8
+
+constraints: unix-compat == 0.7
+allow-newer: *:unix-compat
+
+source-repository-package
+  type: git
+  location: https://github.com/mitchellwrosen/fork--unix-compat.git
+  tag: f28060acd449643d267954647c1bb7c748c35fa9

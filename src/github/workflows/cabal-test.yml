@@ -53,6 +53,13 @@ jobs:
           ## and that prevents me from running the test-suite interactively.
         ghc-ver: ['9.4']
         cabal-ver: ['3.8']
+        ## Andreas, 2023-01-17: test GHC 9.6.1 alpha1
+        include:
+          - os: ubuntu-22.04
+            ghc-ver: '9.6.0.20230111'
+            cabal-ver: '3.8'
+            ghcup-release-channel: https://raw.githubusercontent.com/haskell/ghcup-metadata/master/ghcup-prereleases-0.0.7.yaml
+
 
     steps:
     - uses: actions/checkout@v3
@@ -64,6 +71,7 @@ jobs:
       with:
         ghc-version: ${{ matrix.ghc-ver }}
         cabal-version: ${{ matrix.cabal-ver }}
+        ghcup-release-channel: ${{ matrix.ghcup-release-channel }}
 
     - name: Environment settings based on the Haskell setup
       run: |
@@ -79,6 +87,11 @@ jobs:
       run: |
         cabal update
         cabal configure -O1 --enable-tests
+
+    - name: Build plan for GHC 9.6.1 alpha
+      if:  ${{ matrix.ghc-ver > '9.6' }}
+      run: |
+        cp cabal.project.local.ghc96 cabal.project.local
 
     - uses: actions/cache@v3
       name: Cache dependencies
